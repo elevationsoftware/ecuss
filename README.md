@@ -1,14 +1,24 @@
-# Dillinger
-
-[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
+# Elevated CUSS
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-Dillinger is a cloud-enabled, mobile-ready, offline-storage, AngularJS powered HTML5 Markdown editor.
+ECUSS is a CUSS-enabled, library that bridges the gap between old technologies such as CORBA and the new such as Angular, React, Vue, etc.
 
-  - Type some Markdown on the left
-  - See HTML in the right
-  - Magic
+CORBA is a Common Object Request Broker Architecture that is being around for about 10-15 years. During its lifetime, CORBA has moved from being a bleeding-edge technology for early adopters, to being a popular middleware, to a niche technology that exists in relative obscurity. The complexity around building an application using CORBA has driven web developer away from it.
+
+![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/webapp.png)
+
+### Installation
+
+ECUSS requires [Node.js](https://nodejs.org/) v7+ to run.
+
+For binary dependencies look at the dependency table.
+
+```sh
+$ npm install @elevated-libs/ecuss
+```
+
+
 
 # New Features!
 
@@ -50,24 +60,7 @@ Dillinger uses a number of open source projects to work properly:
 And of course Dillinger itself is open source with a [public repository][dill]
  on GitHub.
 
-### Installation
 
-Dillinger requires [Node.js](https://nodejs.org/) v4+ to run.
-
-Install the dependencies and devDependencies and start the server.
-
-```sh
-$ cd dillinger
-$ npm install -d
-$ node app
-```
-
-For production environments...
-
-```sh
-$ npm install --production
-$ NODE_ENV=production node app
-```
 
 ### Plugins
 
