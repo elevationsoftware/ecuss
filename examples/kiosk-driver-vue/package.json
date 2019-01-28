@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
 		"serve": "vue-cli-service serve",
-		"serve": "vue-cli-service serve --mode legacydev",
+		"serve-old": "vue-cli-service serve --mode legacydev",
     "build": "vue-cli-service build --mode production",
     "build-old": "vue-cli-service build --mode legacyproduction",
     "lint": "vue-cli-service lint",
@@ -41,8 +41,9 @@
   },
   "browserslist": [
     "> 1%",
-    "last 2 versions",
-    "not ie <= 8",
+		"last 2 versions",
+		"Firefox ESR",
+		"IE 11",
     "chrome 27-29",
     "chrome 39",
     "chrome 44"
