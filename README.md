@@ -85,7 +85,7 @@ Then within this animations file you can import the environment config:
 import { environment } from '../../../environments/environment';
 ```
 Using the environemnt config you can configure your animations to return the full animation for a regular build and no animation or potentially a limited animation for a legacy build:
-```sh
+```ts
 const ANIMATION_STEPS_NONE: AnimationMetadata[] = [];
 const ANIMATION_STEPS_ALL: AnimationMetadata[] = [
     // animations steps  
@@ -95,7 +95,7 @@ export const myCustomAnimations = trigger('customAnimation', [
 ]);
 ```
 Then we just import our animation into the component.ts instead of writing it directly in our component declaration:
-```sh
+```ts
 import { myCustomAnimations } from './shared/animations/my-customanimation.ts';
 @Component({
   selector: 'app-home',
@@ -110,11 +110,11 @@ The Angular CLI build process comes bundled with autoprefixer support. To ensure
 
 ###### Known Issues
 Using the css `flex` shorthand:
-```sh
+```css
 flex: <flex-grow> <flex-shrink> <flex-basis>;
 ```
 Does not get properly prefixed for chrome browsers and to ensure that regular and legacy builds both maintain the same styling it is best to split this rule out into the separate rules like:
-```sh
+```css
 display: flex;
 flex-grow: <value>;
 flex-shrink: <value>;
