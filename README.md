@@ -83,37 +83,73 @@ Dillinger is currently extended with the following plugins. Instructions on how 
 | Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
 
 
+### Regular VS Legacy Production/Developtment
+Currently the app supports two separate production builds. The first being just a standard production build while the second is a legacy build for older borwsers on older CUSS platforms. 
+Currently the legacy production build is being used to disable animations so as not to affect performance on older machines as well as extending the webpack build to resolve some issues running with an older feature set of javascript.
+##### Setting up animations to support legacy builds
+To properly support having your animation disabled for legacy builds they should be defined in a separate file in the animations folder. 
+Like:
+```sh
+/shared/animatsion/my-custom-animation.ts
+```
+Then within this animations file you can import the environment config:
+```sh
+import { environment } from '../../../environments/environment';
+```
+Using the environemnt config you can configure your animations to return the full animation for a regular build and no animation or potentially a limited animation for a legacy build:
+```sh
+const ANIMATION_STEPS_NONE: AnimationMetadata[] = [];
+const ANIMATION_STEPS_ALL: AnimationMetadata[] = [
+    // animations steps  
+];
+export const myCustomAnimations = trigger('customAnimation', [
+  transition('* => *', environment.ANIMATIONS ? ANIMATION_STEPS_ALL : ANIMATION_STEPS_NONE)
+]);
+```
+Then we just import our animation into the component.ts instead of writing it directly in our component declaration:
+```sh
+import { myCustomAnimations } from './shared/animations/my-customanimation.ts';
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
+  animations: [myCustomAnimations]
+})
+```
+
+##### CSS support for legacy browsers
+The Angular CLI build process comes bundled with autoprefixer support. To ensure that the build process is prefixing the CSS properly for the browser you are attempting to run the app on. Ensure that the browser is being covered by the rules in the browserslist file in the `src` folder.
+
+###### Known Issues
+Using the css `flex` shorthand:
+```sh
+flex: <flex-grow> <flex-shrink> <flex-basis>;
+```
+Does not get properly prefixed for chrome browsers and to ensure that regular and legacy builds both maintain the same styling it is best to split this rule out into the separate rules like:
+```sh
+display: flex;
+flex-grow: <value>;
+flex-shrink: <value>;
+flex-basis: <value>;
+```
+
 ### Development
-
-Want to contribute? Great!
-
-Dillinger uses Gulp + Webpack for fast developing.
-Make a change in your file and instantanously see your updates!
-
-Open your favorite Terminal and run these commands.
-
-First Tab:
+To serve up the environement locally on port 5000 run:
 ```sh
-$ node app
+$ npm run start
 ```
-
-Second Tab:
+To serve up the legacy version locally on port 5000 run:
 ```sh
-$ gulp watch
+$ npm run start-old
 ```
-
-(optional) Third:
-```sh
-$ karma test
-```
-#### Building for source
+### Building for source
 For production release:
 ```sh
-$ gulp build --prod
+$ npm run build
 ```
-Generating pre-built zip archives for distribution:
+For legacy production release:
 ```sh
-$ gulp build dist --prod
+$ npm run build-old
 ```
 ### Docker
 Dillinger is very easy to install and deploy in a Docker container.
