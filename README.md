@@ -6,7 +6,6 @@ ECUSS is a CUSS-enabled, library that bridges the gap between old technologies s
 
 CORBA is a Common Object Request Broker Architecture that is being around for about 10-15 years. During its lifetime, CORBA has moved from being a bleeding-edge technology for early adopters, to being a popular middleware, to a niche technology that exists in relative obscurity. The complexity around building an application using CORBA has driven web developer away from it.
 
-![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/webapp.png)
 
 ### Installation
 
