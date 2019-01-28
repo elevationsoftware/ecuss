@@ -6,41 +6,37 @@ ECUSS is a CUSS-enabled, library that bridges the gap between old technologies s
 
 CORBA is a Common Object Request Broker Architecture that is being around for about 10-15 years. During its lifetime, CORBA has moved from being a bleeding-edge technology for early adopters, to being a popular middleware, to a niche technology that exists in relative obscurity. The complexity around building an application using CORBA has driven web developer away from it.
 
+#### Application without ECUSS
+
+![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/oldapp.png)
+
+#### Application written with ECUSS
+
+![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/new%20app.png)
 
 ### Installation
 
-ECUSS requires [Node.js](https://nodejs.org/) v7+ to run.
-
-For binary dependencies look at the dependency table.
+ECUSS requires an access token and binary dependecies. For more information look at the dependencies table
 
 ```sh
 $ npm install @elevated-libs/ecuss
 ```
 
+# Using ECUSS SDK
 
 
-# New Features!
-
-  - Import a HTML file and watch it magically convert to Markdown
-  - Drag and drop images (requires your Dropbox account be linked)
+```ts
+import ecuss from '@elevated-libs/ecuss';
 
 
-You can also:
-  - Import and save files from GitHub, Dropbox, Google Drive and One Drive
-  - Drag and drop markdown and HTML files into Dillinger
-  - Export documents as Markdown, HTML and PDF
+// Generating dom elements
+ecuss.int();
 
-Markdown is a lightweight markup language based on the formatting conventions that people naturally use in email.  As [John Gruber] writes on the [Markdown site][df1]
 
-> The overriding design goal for Markdown's
-> formatting syntax is to make it as readable
-> as possible. The idea is that a
-> Markdown-formatted document should be
-> publishable as-is, as plain text, without
-> looking like it's been marked up with tags
-> or formatting instructions.
+// Start the communcation with the CUSS platform
+ecuss.startSDK();
 
-This text you see here is *actually* written in Markdown! To get a feel for Markdown's syntax, type some text into the left window and watch the results in the right.
+```
 
 ### Tech
 
