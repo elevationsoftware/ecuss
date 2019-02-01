@@ -193,30 +193,91 @@ barcode: Subject<scannerDataEvent>;
 
 ```
 
+## Environment Configuration
 
-## Technology Required
+Besides the regular dependencies, the Elevated CUSS Angular Service, required serveral critical set of data, in order to configurate the CUSS platform correctly.
+
+In order to provide these data to the service, you need to define a CUSS_CONFIG within your environment file.
+
+Example:
+
+```js
+export const environment = {
+  production: false,
+  CUSS_CONFIG: {
+    applicationName: 'elevated',
+    companyCode: 'ELS',
+    pectabTemplate: 'BTP030101...',
+    images: []
+  }
+};
+```
+
+### Configuring Angular Service
+
+There are serval step in order to utilize the Elevated CUSS Angular Service
+
+* Add the module to the imports NgModule property and inject the environment file
+
+```ts
+//app.module.ts
+import { CussModule } from '@elevated-libs/cuss';
+import { environment } from '../environments/environment';
+
+...
+
+@NgModule({
+...
+imports: [
+  CussModule.forRoot(environment)
+]
+```
+
+### Enable Access to the Jar files
+
+The Angular application must have access to the Jar files from the root of the application. Which means that the following files should be accessible as follow:
+
+```js
+/elevated-cuss.jar
+/jackson-annotations-2.6.0.jar
+/jackson-databind-2.6.3.jar
+/jackson-core-2.6.3.jar
+```
+
+In order to get hold of the described jars, please contact Elevation Software Tech support.
+
+## Denpendencies
 
 This Angular library has the following dependencies:
+|Items| Description|
+|-----|------------|
+|**ECUSS**| A Javascript binding for Elevated CUSS Applet|
+|**Java Applet**| The jar required to create a CORBA and JS binding|
+|**KioskToken** | An Elevated unique identifier that enable cloud communication.|
+|**NPM Token**  | A required token that allows the installation of the private npm package|
 
-* **ECUSS** - A Javascript binding for Elevated CUSS Applet
-* **Java Applet** - The jar required to create a CORBA and JS binding
-* **KioskToken** - An Elevated unique identifier that enable cloud communication.
-* **NPM Token** - A required token that allows the installation of the private npm package
 
+## CSS Best Practices for Older Browsers
 
 ### Regular VS Legacy Production/Developtment
+
 Currently the app supports two separate production builds. The first being just a standard production build while the second is a legacy build for older borwsers on older CUSS platforms. 
 Currently the legacy production build is being used to disable animations so as not to affect performance on older machines as well as extending the webpack build to resolve some issues running with an older feature set of javascript.
-##### Setting up animations to support legacy builds
+
+#### Setting up animations to support legacy builds
 To properly support having your animation disabled for legacy builds they should be defined in a separate file in the animations folder. 
 Like:
+
 ```sh
 /shared/animatsion/my-custom-animation.ts
 ```
+
 Then within this animations file you can import the environment config:
+
 ```sh
 import { environment } from '../../../environments/environment';
 ```
+
 Using the environemnt config you can configure your animations to return the full animation for a regular build and no animation or potentially a limited animation for a legacy build:
 
 ```ts
@@ -228,7 +289,9 @@ export const myCustomAnimations = trigger('customAnimation', [
   transition('* => *', environment.ANIMATIONS ? ANIMATION_STEPS_ALL : ANIMATION_STEPS_NONE)
 ]);
 ```
+
 Then we just import our animation into the component.ts instead of writing it directly in our component declaration:
+
 ```ts
 import { myCustomAnimations } from './shared/animations/my-customanimation.ts';
 @Component({
@@ -239,10 +302,10 @@ import { myCustomAnimations } from './shared/animations/my-customanimation.ts';
 })
 ```
 
-##### CSS support for legacy browsers
+#### CSS support for legacy browsers
 The Angular CLI build process comes bundled with autoprefixer support. To ensure that the build process is prefixing the CSS properly for the browser you are attempting to run the app on. Ensure that the browser is being covered by the rules in the browserslist file in the `src` folder.
 
-###### Known Issues
+##### Known Issues
 Using the css `flex` shorthand:
 ```css
 flex: <flex-grow> <flex-shrink> <flex-basis>;
@@ -260,4 +323,3 @@ flex-basis: <value>;
  - Payment
  - Lights
  - GPP
-
