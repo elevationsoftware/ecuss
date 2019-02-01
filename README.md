@@ -215,7 +215,7 @@ export const environment = {
 
 ### Configuring Angular Service
 
-There are serval step in order to utilize the Elevated CUSS Angular Service
+There are serval steps required in order to utilize the Elevated CUSS Angular Service
 
 * Add the module to the imports NgModule property and inject the environment file
 
@@ -235,7 +235,7 @@ imports: [
 
 ### Enable Access to the Jar files
 
-The Angular application must have access to the Jar files from the root of the application. Which means that the following files should be accessible as follow:
+The Angular application must have access to the Jar files from the root of the web server. Which means that the following files should be accessible as follow:
 
 ```js
 /elevated-cuss.jar
@@ -249,12 +249,13 @@ In order to get hold of the described jars, please contact Elevation Software Te
 ## Denpendencies
 
 This Angular library has the following dependencies:
-|Items| Description|
-|-----|------------|
-|**ECUSS**| A Javascript binding for Elevated CUSS Applet|
-|**Java Applet**| The jar required to create a CORBA and JS binding|
-|**KioskToken** | An Elevated unique identifier that enable cloud communication.|
-|**NPM Token**  | A required token that allows the installation of the private npm package|
+
+| Items          | Description                                                              |
+| --------------- | -------------------------------------------------------------------------- |
+| **ECUSS**      | A Javascript binding for Elevated CUSS Applet                            |
+| **Java Applet**| The jar required to create a CORBA and JS binding                        |
+| **KioskToken** | An Elevated unique identifier that enable cloud communication.           |
+| **NPM Token**  | A required token that allows the installation of the private npm package |
 
 
 ## CSS Best Practices for Older Browsers
