@@ -6,9 +6,6 @@ ECUSS is a CUSS-enabled, library that bridges the gap between old technologies s
 
 CORBA is a Common Object Request Broker Architecture that is being around for about 10-15 years. During its lifetime, CORBA has moved from being a bleeding-edge technology for early adopters, to being a popular middleware, to a niche technology that exists in relative obscurity. The complexity around building an application using CORBA has driven web developer away from it.
 
-#### Application without ECUSS
-
-![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/oldapp.png)
 
 #### Application written with ECUSS
 
@@ -19,56 +16,189 @@ CORBA is a Common Object Request Broker Architecture that is being around for ab
 ECUSS requires an access token and binary dependecies. For more information look at the dependencies table
 
 ```sh
-$ npm install @elevated-libs/ecuss
+$ npm install @elevated-libs/cuss
 ```
 
-# Using ECUSS SDK
+# Using Elvevated CUSS Angular Service
 
+### Initiate SDK
 
 ```ts
-import ecuss from '@elevated-libs/ecuss';
+import { CussService } from '@elevated-libs/cuss';
 
 
-// Generating dom elements
-ecuss.int();
+// start library inside Angular AppComponent
 
-
-// Start the communcation with the CUSS platform
-ecuss.startSDK();
+export class AppComponent {
+  constructor ( private cussService: CussService ) {
+    this.cussService.start();
+  }
+}
 
 ```
 
-### Tech
+### Printing
 
-Dillinger uses a number of open source projects to work properly:
+```ts
 
-* [AngularJS] - HTML enhanced for web apps!
-* [Ace Editor] - awesome web-based text editor
-* [markdown-it] - Markdown parser done right. Fast and easy to extend.
-* [Twitter Bootstrap] - great UI boilerplate for modern web apps
-* [node.js] - evented I/O for the backend
-* [Express] - fast node.js network app framework [@tjholowaychuk]
-* [Gulp] - the streaming build system
-* [Breakdance](http://breakdance.io) - HTML to Markdown converter
-* [jQuery] - duh
+import { BagTag } from '@elevated-libs/cuss';
 
-And of course Dillinger itself is open source with a [public repository][dill]
- on GitHub.
+....
+
+// Instatiating the bagtag service in an Angular Component
+export class BagTagComponent implements OnInit {
+  constructor( private bagTag: BagTag ) {}
+}
+
+ngOnInit() {}
+
+print(pectab: string): number {
+  return this.bagTag.print(pectab);
+}
 
 
+```
 
-### Plugins
+### Scanning
 
-Dillinger is currently extended with the following plugins. Instructions on how to use them in your own application are linked below.
+```ts
+import { ScannerService } from '@elevated-libs/cuss';
 
-| Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md][PlDb] |
-| Github | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
+...
+
+export class ScannerComponent implements OnInit, OnDestroy {
+  
+  barcodeData: string;
+  scannerSubscrition: Subscription;
+  constructor( private scannerService: ScannerService ) {}
+  
+  ngOnInit() {
+    this.scannerSubscription = this.scannerService.barcode
+    .subscribe(res => {
+      this.barcodeData = res.data[0].message;
+    });
+  }
+
+  ngOnDestroy() {
+    this.scannerSubscription.unsubscribe();
+  }
+}
+
+```
+
+## API Reference
+
+### CussService
+
+```ts
+
+import { CussService } from '@elevated-libs/cuss';
+
+...
+// Instantiating service in a Component or Service
+constructor( private cuss: CussService) {}
+
+/**
+*  Events Observable
+*  Subscribe to the events prop to get all cuss events
+*/
+events: Subject<cussEvent>;
+
+  // example:
+  this.cuss.events.Subscribe(event => {
+    console.log(event.statusCode);
+  });
+
+
+/**
+* Subscribe when the application becomes available
+*/
+activated: Subject<cussEvent>;
+
+/**
+* Subscribe when the application goes to the available state
+*/
+disabled: Subject<cussEvent>;
+
+/**
+* Initializes ecuss applet.
+* Required companyCode and applicationName to be define in the environment file.
+*/
+init(): void
+
+/**
+* Starts the CORBA communication through the Applet.
+*/
+startSDK(): void 
+
+/**
+* Start the communication with CORBA.
+* This function will call init and startSDK from the ecuss lib.
+* Make sure to complete the CUSS_CONFIG data in the environment file.
+*/
+start(): void 
+
+  //example
+  this.cuss.start();
+
+```
+
+### BagTag
+
+```ts
+import { BagTag } from '@elevated-libs/cuss';
+
+...
+// Instantiating service in a Component or Service
+constructor(private bagTag: BagTag) { }
+
+/**
+* Send the pectab template and images to the application manager, for later use when the app moves to the Active State.
+* Example: BTT0301[A 520195=#01B1...
+* @param pectab
+*/
+setup(pectab: string): number;
+
+
+/**
+* Send the pectab data to the application manager for a print process request
+* Example: BTP030101#01
+* @param pectab
+*/
+print(pectab: string): number;
+
+```
+
+### ScannerService
+
+```ts
+import { ScannerService } from '@elevated-libs/cuss';
+
+...
+// Instantiating service in a Component or Service
+constructor(private scannerService: ScannerService) { }
+
+/**
+* Subscribe to barcode scanned text coming from a CUSS scanner
+*/
+barcode: Subject<scannerDataEvent>;
+
+  // exmple:
+  this.scannerService.barcode
+  .subscribe(res => console.log('BARCODE', res.data[0].message));
+
+
+```
+
+
+## Technology Required
+
+This Angular library has the following dependencies:
+
+* **ECUSS** - A Javascript binding for Elevated CUSS Applet
+* **Java Applet** - The jar required to create a CORBA and JS binding
+* **KioskToken** - An Elevated unique identifier that enable cloud communication.
+* **NPM Token** - A required token that allows the installation of the private npm package
 
 
 ### Regular VS Legacy Production/Developtment
@@ -85,6 +215,7 @@ Then within this animations file you can import the environment config:
 import { environment } from '../../../environments/environment';
 ```
 Using the environemnt config you can configure your animations to return the full animation for a regular build and no animation or potentially a limited animation for a legacy build:
+
 ```ts
 const ANIMATION_STEPS_NONE: AnimationMetadata[] = [];
 const ANIMATION_STEPS_ALL: AnimationMetadata[] = [
@@ -121,85 +252,9 @@ flex-shrink: <value>;
 flex-basis: <value>;
 ```
 
-### Development
-To serve up the environement locally on port 5000 run:
-```sh
-$ npm run start
-```
-To serve up the legacy version locally on port 5000 run:
-```sh
-$ npm run start-old
-```
-### Building for source
-For production release:
-```sh
-$ npm run build
-```
-For legacy production release:
-```sh
-$ npm run build-old
-```
-### Docker
-Dillinger is very easy to install and deploy in a Docker container.
-
-By default, the Docker will expose port 8080, so change this within the Dockerfile if necessary. When ready, simply use the Dockerfile to build the image.
-
-```sh
-cd dillinger
-docker build -t joemccann/dillinger:${package.json.version} .
-```
-This will create the dillinger image and pull in the necessary dependencies. Be sure to swap out `${package.json.version}` with the actual version of Dillinger.
-
-Once done, run the Docker image and map the port to whatever you wish on your host. In this example, we simply map port 8000 of the host to port 8080 of the Docker (or whatever port was exposed in the Dockerfile):
-
-```sh
-docker run -d -p 8000:8080 --restart="always" <youruser>/dillinger:${package.json.version}
-```
-
-Verify the deployment by navigating to your server address in your preferred browser.
-
-```sh
-127.0.0.1:8000
-```
-
-#### Kubernetes + Google Cloud
-
-See [KUBERNETES.md](https://github.com/joemccann/dillinger/blob/master/KUBERNETES.md)
-
-
 ### Todos
 
- - Write MORE Tests
- - Add Night Mode
+ - Payment
+ - Lights
+ - GPP
 
-License
-----
-
-MIT
-
-
-**Free Software, Hell Yeah!**
-
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
-
-
-   [dill]: <https://github.com/joemccann/dillinger>
-   [git-repo-url]: <https://github.com/joemccann/dillinger.git>
-   [john gruber]: <http://daringfireball.net>
-   [df1]: <http://daringfireball.net/projects/markdown/>
-   [markdown-it]: <https://github.com/markdown-it/markdown-it>
-   [Ace Editor]: <http://ace.ajax.org>
-   [node.js]: <http://nodejs.org>
-   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
-   [jQuery]: <http://jquery.com>
-   [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
-   [express]: <http://expressjs.com>
-   [AngularJS]: <http://angularjs.org>
-   [Gulp]: <http://gulpjs.com>
-
-   [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
-   [PlGh]: <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>
-   [PlGd]: <https://github.com/joemccann/dillinger/tree/master/plugins/googledrive/README.md>
-   [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
-   [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
-   [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md>
