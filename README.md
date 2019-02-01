@@ -258,6 +258,12 @@ This Angular library has the following dependencies:
 | **NPM Token**  | A required token that allows the installation of the private npm package |
 
 
+## Special Features
+
+### IntelliSense
+![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/intellisense1.png)
+![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/intellisense2.png)
+
 ## CSS Best Practices for Older Browsers
 
 ### Regular VS Legacy Production/Developtment
