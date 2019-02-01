@@ -264,6 +264,14 @@ This Angular library has the following dependencies:
 ![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/intellisense1.png)
 ![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/intellisense2.png)
 
+### Cloud Connectivity
+![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/cloud.png)
+
+Get real time data on events and user's interaction with your cuss application through the Elevated IOT service.
+
+![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/dashboard.png)
+
+
 ## CSS Best Practices for Older Browsers
 
 ### Regular VS Legacy Production/Developtment
