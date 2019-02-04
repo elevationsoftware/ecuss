@@ -2,27 +2,29 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/angularcuss.png)
+![](https://github.com/elevationsoftware/ecuss/blob/master/images/angularcuss.png)
 
 
-ECUSS is a CUSS-enabled, library that bridges the gap between old technologies such as CORBA and the new such as Angular, React, Vue, etc.
+ECUSS is a library which brings modern development possibilities to the Common Use Self Service industry.  The CUSS specification has been around since the early 2000s and is very difficult to program against without a facade in place to facilitation communication.
 
-CORBA is a Common Object Request Broker Architecture that is being around for about 10-15 years. During its lifetime, CORBA has moved from being a bleeding-edge technology for early adopters, to being a popular middleware, to a niche technology that exists in relative obscurity. The complexity around building an application using CORBA has driven web developer away from it.
+CORBA (Common Object Request Broker Architecture) bridges the communication between the client application and the device layer. CORBA faded from use close to two decades ago as many new architectures emerged which proved much easier to use.
+
+With ECUSS, organizations can use modern JavaScript frameworks and tools to build applications including TypeScript, Angular, React, Vue, EcmaScript+.  The framework is also forward compatible with alpha versions of the CUSS 2.X line and won't require any upgrades as the new version emerges.
 
 
 #### Application written with ECUSS
 
-![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/new%20app.png)
+![](https://github.com/elevationsoftware/ecuss/blob/master/images/new%20app.png)
 
 ### Installation
 
-ECUSS requires an access token and binary dependecies. For more information look at the dependencies table
+ECUSS requires an access token and binary dependencies to be used in production or to access real devices.  To facilitate development, the library can simulate all device commands and event subscriptions.
 
 ```sh
 $ npm install @elevated-libs/cuss
 ```
 
-# Using Elvevated CUSS Angular Service
+# Using the Elevated CUSS Angular Service
 
 ### Initiate SDK
 
@@ -48,7 +50,7 @@ import { BagTag } from '@elevated-libs/cuss';
 
 ....
 
-// Instatiating the bagtag service in an Angular Component
+// Instantiating the bagtag service in an Angular Component
 export class BagTagComponent implements OnInit {
   constructor( private bagTag: BagTag ) {}
 }
@@ -125,7 +127,7 @@ disabled: Subject<cussEvent>;
 
 /**
 * Initializes ecuss applet.
-* Required companyCode and applicationName to be define in the environment file.
+* Required companyCode and applicationName to be defined in the environment file.
 */
 init(): void
 
@@ -186,7 +188,7 @@ constructor(private scannerService: ScannerService) { }
 */
 barcode: Subject<scannerDataEvent>;
 
-  // exmple:
+  // example:
   this.scannerService.barcode
   .subscribe(res => console.log('BARCODE', res.data[0].message));
 
@@ -195,9 +197,9 @@ barcode: Subject<scannerDataEvent>;
 
 ## Environment Configuration
 
-Besides the regular dependencies, the Elevated CUSS Angular Service, required serveral critical set of data, in order to configurate the CUSS platform correctly.
+In addition to regular dependencies, the Elevated CUSS Angular Service requires several critical sets of data to configure the platform correctly.
 
-In order to provide these data to the service, you need to define a CUSS_CONFIG within your environment file.
+Define a CUSS_CONFIG within your environment file.
 
 Example:
 
@@ -215,7 +217,7 @@ export const environment = {
 
 ### Configuring Angular Service
 
-There are serval steps required in order to utilize the Elevated CUSS Angular Service
+There are several steps required to utilize the Elevated CUSS Angular Service:
 
 * Add the module to the imports NgModule property and inject the environment file
 
@@ -244,11 +246,11 @@ The Angular application must have access to the Jar files from the root of the w
 /jackson-core-2.6.3.jar
 ```
 
-In order to get hold of the described jars, please contact Elevation Software Tech support.
+Contact Elevation Software Tech support to get a production or trial copy of the necessary Jars.
 
-## Denpendencies
+## Dependencies
 
-This Angular library has the following dependencies:
+The Angular library has the following dependencies:
 
 | Items          | Description                                                              |
 | --------------- | -------------------------------------------------------------------------- |
@@ -261,39 +263,55 @@ This Angular library has the following dependencies:
 ## Special Features
 
 ### IntelliSense
-![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/intellisense1.png)
-![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/intellisense2.png)
+![](https://github.com/elevationsoftware/ecuss/blob/master/images/intellisense1.png)
+![](https://github.com/elevationsoftware/ecuss/blob/master/images/intellisense2.png)
 
 ### Cloud Connectivity
-![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/cloud.png)
+![](https://github.com/elevationsoftware/ecuss/blob/master/images/cloud.png)
 
-Get real time data on events and user's interaction with your cuss application through the Elevated IOT service.
+Through the Elevated IOT Service, you can remotely control all kiosks in enterprise.  Control all kiosk devices through handheld applications and empower your agents and customers to use kiosks in new and creative ways.
 
-![](https://github.com/elevationsoftware/ecuss/blob/master/imagess/dashboard.png)
+Kiosk heath subscriptions can also give instant feed back on how all of your remote hardware is working.  Very little onsite administration is required once all of your kiosks are cloud connected.
+
+![](https://github.com/elevationsoftware/ecuss/blob/master/images/dashboard.png)
 
 
-## CSS Best Practices for Older Browsers
+## CUSS & Chrome Versions
 
-### Regular VS Legacy Production/Developtment
+| CUSS | Chrome | Adoption |
+| --------------- | --------------- | --------------- | 
+| **1.2** | No Chrome - IE 6 Only | End of Life ~ < 1% |
+| **1.3** | Chrome 27 | ~ 45% |
+| **1.4** | Chrome 39 | ~ 50% |
+| **1.5** | Chrome 44 or BYOB** | No Adoption |
 
-Currently the app supports two separate production builds. The first being just a standard production build while the second is a legacy build for older borwsers on older CUSS platforms. 
-Currently the legacy production build is being used to disable animations so as not to affect performance on older machines as well as extending the webpack build to resolve some issues running with an older feature set of javascript.
+** Bring Your Own Browser (BYOB) was introduced in CUSS 1.5 but most CUSS Libraries still require a Java applet and hence restrict you to Chrome 44 and below.  **The Elevated ECUSS library uses a Java Fat Client proxy serving a REST API that lets you use any of the latest browsers.**
 
-#### Setting up animations to support legacy builds
-To properly support having your animation disabled for legacy builds they should be defined in a separate file in the animations folder. 
-Like:
+
+## Older Browsers - Graceful Degradation
+
+### Regular VS Legacy Production/Development
+
+Currently, the library supports two separate production builds. The first being a standard production build while the second is a legacy build for older browsers on older CUSS platforms.
+
+The legacy production build can be used to deprecate functionality which can't be handled in browsers as old as Chrome 39 or 27.  JavaScript APIs are pretty stable after about Chrome 30.  But, intestive regression should be run and adequate polyfills may be needed to access simple methods such as Array.find.  Consider a solid Babel compilation workflow and usage of libraries like UnderScore or Lodash carefully.
+
+See our [Chrome Compatibility Matrix](https://github.com/elevationsoftware) for a list of features and APIs available across versions.
+
+#### Angular Example - Degrade Animation Libraries
+As an example, browser animations were very unstable in older browsers and they really needed GPU acceleration to work as designed.  In an Angular workflow, move all your animations to an isolated location and then they can return noops based on environment configuration.
 
 ```sh
-/shared/animatsion/my-custom-animation.ts
+/shared/animations/my-custom-animation.ts
 ```
 
-Then within this animations file you can import the environment config:
+Within this animations file you can import the environment config:
 
 ```sh
 import { environment } from '../../../environments/environment';
 ```
 
-Using the environemnt config you can configure your animations to return the full animation for a regular build and no animation or potentially a limited animation for a legacy build:
+Using the environment config you can configure your animations to return the full animation for a regular build and no animation or potentially a limited animation for a legacy build:
 
 ```ts
 const ANIMATION_STEPS_NONE: AnimationMetadata[] = [];
@@ -305,7 +323,7 @@ export const myCustomAnimations = trigger('customAnimation', [
 ]);
 ```
 
-Then we just import our animation into the component.ts instead of writing it directly in our component declaration:
+Then, just import your animation into the component.ts instead of writing it directly in the component declaration:
 
 ```ts
 import { myCustomAnimations } from './shared/animations/my-customanimation.ts';
@@ -318,7 +336,10 @@ import { myCustomAnimations } from './shared/animations/my-customanimation.ts';
 ```
 
 #### CSS support for legacy browsers
-The Angular CLI build process comes bundled with autoprefixer support. To ensure that the build process is prefixing the CSS properly for the browser you are attempting to run the app on. Ensure that the browser is being covered by the rules in the browserslist file in the `src` folder.
+
+Consult documentation sites such as caniuse and MDN frequently to ensure decent CSS complaince.  Also remember that kiosks are typically I3 processors with very limited memory and should be treated as very incapable environments.
+
+The Angular CLI build process comes bundled with autoprefixer support.  Ensure that the your build process is prefixing the CSS properly for the browser you are attempting to use. Also, verify that the browser is being covered by the rules in the browserslist file in the `src` folder.
 
 ##### Known Issues
 Using the css `flex` shorthand:
