@@ -5,7 +5,7 @@
 ![](https://github.com/elevationsoftware/ecuss/blob/master/images/angularcuss.png)
 
 
-ECUSS is a library which brings modern development possibilities to the Common Use Self Service industry.  The CUSS specification has been around since the early 2000s and is very difficult to program against without a facade in place to facilitation communication.
+ECUSS is a library which brings modern development possibilities to the Common Use Self Service industry.  The CUSS specification has been around since the early 2000s and is very difficult to program against without a facade in place to facilitate communication.
 
 CORBA (Common Object Request Broker Architecture) bridges the communication between the client application and the device layer. CORBA faded from use close to two decades ago as many new architectures emerged which proved much easier to use.
 
