@@ -287,6 +287,17 @@ Kiosk heath subscriptions can also give instant feed back on how all of your rem
 
 ** Bring Your Own Browser (BYOB) was introduced in CUSS 1.5 but most CUSS Libraries still require a Java applet and hence restrict you to Chrome 44 and below.  **The Elevated ECUSS library uses a Java Fat Client proxy serving a REST API that lets you use any of the latest browsers.**
 
+## USE CHROME - Internet Explorer is Dead
+
+Microsoft never had the capability to keep up with Google in the browser market.  In fact, Microsoft's reboot of their browser has officially died late last year and is being re-imagined with the Chromium at it's core.  Let me restate that loudly:
+
+`MICROSOFT IS BASING ITS FUTURE BROWSER OFFERING ON THE CHROMIUM PROJECT.`
+
+There's a simple message to take away here folks:
+
+**Just base all your kiosk applications on Chrome!**
+
+The kiosk market share for CUSS 1.2, which only offered IE6, comprises of less than 1% of the market these days.  Chrome 27 is quite capable and Chrome beyond version 30 really has a decent API.  Develop your graceful degradation/progressive enhancement strategy and don't be afraid to build kiosk experiences that rival modern web apps!
 
 ## Older Browsers - Graceful Degradation
 
