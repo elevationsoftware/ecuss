@@ -7,9 +7,9 @@
 
 ECUSS is a library which brings modern development possibilities to the Common Use Self Service industry.  The CUSS specification has been around since the early 2000s and is very difficult to program against without a facade in place to facilitate communication.
 
-CORBA (Common Object Request Broker Architecture) bridges the communication between the client application and the device layer. CORBA faded from use close to two decades ago as many new architectures emerged which proved much easier to use.
+The CUSS 1.X line is built entirely on CORBA (Common Object Request Broker Architecture) and modern technologies simply can't make use of such legacy tech without a complicated proxy.  CORBA bridges the communication gap between the client application and the device layer through a Java applet.  Applet technology itself (NPAPI) has also been obsolete for many years and it's graceful replacement is the intention of this library.
 
-With ECUSS, organizations can use modern JavaScript frameworks and tools to build applications including TypeScript, Angular, React, Vue, EcmaScript+.  The framework is also forward compatible with alpha versions of the CUSS 2.X line and won't require any upgrades as the new version emerges.
+With ECUSS, organizations can use modern JavaScript frameworks and tools to build applications including TypeScript, Angular, React, Vue, EcmaScript+.  The framework is forward compatible with alpha versions of the CUSS 2.X line and won't require any upgrades as new versions emerges.
 
 
 #### Application written with ECUSS
