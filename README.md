@@ -36,13 +36,22 @@ import { CussService } from '@elevated-libs/cuss';
 
 export class AppComponent {
   constructor ( private cussService: CussService ) {
-    this.cussService.start();
+    
+    // Register Your app in the CUSS Platform
+    this.cussService.register()
+    .then(res => {
+      // check if all the required devices are available'
+      if (res.allDevicesAvailable) {
+        // Making the application AVAILABLE to the CLA
+        this.cussService.start();
+      }
+    });
   }
 }
 
 ```
 
-### Printing
+### BagTag Printing
 
 ```ts
 
@@ -57,14 +66,15 @@ export class BagTagComponent implements OnInit {
 
 ngOnInit() {}
 
-print(pectab: string): number {
-  return this.bagTag.print(pectab);
+async print(pectab: string): number {
+  const responseCode = await this.bagTag.print(pectab);
+  console.log(`Response Code: ${responseCode}`);
 }
 
 
 ```
 
-### Scanning
+### Barcode Scanning
 
 ```ts
 import { ScannerService } from '@elevated-libs/cuss';
@@ -121,30 +131,96 @@ events: Subject<cussEvent>;
 activated: Subject<cussEvent>;
 
 /**
-* Subscribe when the application goes to the available state
+* Subscribe when the application goes from the active to the available state
 */
 disabled: Subject<cussEvent>;
 
 /**
-* Initializes ecuss applet.
-* Required companyCode and applicationName to be defined in the environment file.
+* Register an application through the Elevated CUSS RESTful service. 
+* companyCode and applicationName are required.
+* POST http://{URL}/register - DATA {ClientConfiguration}
+* @param config 
 */
-init(): void
+register(config: ClientConfiguration):  Promise<RegisterResponse>;
 
 /**
-* Starts the CORBA communication through the Applet.
+* Check the version of the Elevated CUSS RESTful service as well as
+* a check function to verify service availability.
+* GET http://{URL}/version
 */
-startSDK(): void 
+version(): Promise<{ version: String}>
 
 /**
-* Start the communication with CORBA.
-* This function will call init and startSDK from the ecuss lib.
-* Make sure to complete the CUSS_CONFIG data in the environment file.
+* Get a list of available devices. 
+* GET http://{URL}/devices
 */
-start(): void 
+devicesList(): Promise<Device[]>;
 
-  //example
-  this.cuss.start();
+/**
+* Enable a particular device by ID.
+* POST http://{URL}/enable?deviceId={deviceId}
+* @param deviceId 
+*/
+enable(deviceId: number): Promise<returncode>;
+
+/**
+* Disable a particular device by ID.
+* POST http://{URL}/disable?deviceId={deviceId}
+* @param deviceId
+*/
+disable(deviceId: number): Promise<returncode>;
+
+/**
+* Get the current resolution of the CUSS kiosk.
+* GET http://{URL}/display
+*/
+getDisplay(): Promise<number[]>;
+
+/**
+* Set the screen resolution of the kiosk.
+* POST http://{URL}/display?resolution={resolution}
+* @param resolution 
+*/
+setDisplay(resolution: number): Promise<returncode>;
+
+/**
+* Get the fisical path of your application.
+* GET http://{URL}/storage
+*/
+storage(): Promise<{response: String}>;
+
+/**
+* Setup any available device in the CUSS platform.
+* POST http://{URL}/setup?deviceId={deviceId}&data={data}
+* @param deviceId 
+* @param data 
+*/
+setup(deviceId: number, data: string): Promise<returncode>;
+
+/**
+* Send data to a device in the CUSS platform.
+* POST http://{URL}/send?deviceId={deviceId}&data=${data}
+* @param deviceId 
+* @param data 
+*/
+send(deviceId: number, data: String): Promise<returncode>;
+
+/**
+* Notify the CUSS platfrom that application wants to transition to a different state.
+* POST http://{URL}/transition?state={state}
+* @param state 
+*/
+transition(state: TRANS): Promise<returncode>;
+
+/**
+* Send a transition request from UNAVAILABLE to AVAILABLE
+*/
+start();
+
+/**
+  * Send a transition request from ACTIVE to AVAILABLE
+  */
+stop();
 
 ```
 
@@ -158,11 +234,11 @@ import { BagTag } from '@elevated-libs/cuss';
 constructor(private bagTag: BagTag) { }
 
 /**
-* Send the pectab template and images to the application manager, for later use when the app moves to the Active State.
-* Example: BTT0301[A 520195=#01B1...
-* @param pectab
+* Send the pectab template and images to the application manager, 
+* for later use when the app moves to the Active State.
+* The pectab is coming from the environment file
 */
-setup(pectab: string): number;
+setup(): Promise<returncode>;
 
 
 /**
@@ -184,7 +260,7 @@ import { ScannerService } from '@elevated-libs/cuss';
 constructor(private scannerService: ScannerService) { }
 
 /**
-* Subscribe to barcode scanned text coming from a CUSS scanner
+* Subscribe to the barcode data comming from the CUSS Barcode Scanner.
 */
 barcode: Subject<scannerDataEvent>;
 
@@ -207,10 +283,40 @@ Example:
 export const environment = {
   production: false,
   CUSS_CONFIG: {
-    applicationName: 'elevated',
-    companyCode: 'ELS',
-    pectabTemplate: 'BTP030101...',
-    images: []
+    applicationName: 'elevatedcuss',
+    companyCode: 'ELV',
+    devices: [
+      {
+        name: 'passportReader',
+        componentName: 'PassportReader',
+        componentType: 'MediaInput',
+        autoEnable: true
+      },
+      {
+        name: 'bagtagPrinter',
+        template: 'BTT0301[A ...',
+        images: [],
+        componentName: 'BagTagPrinter',
+        componentType: 'MediaOutput',
+        autoEnable: false,
+        autoSetup: true
+      },
+      {
+        name: 'boardingPassPrinter',
+        // tslint:disable-next-line:max-line-length
+        template: 'PT##?W0...',
+        images: [],
+        componentName: 'GPPrinter',
+        componentType: 'MediaOutput',
+        autoEnable: false,
+        autoSetup: true
+      },
+      {
+        name: 'Display',
+        componentName: 'Display',
+        componentType: 'Display',
+      }
+    ]
   }
 };
 ```
@@ -235,15 +341,13 @@ imports: [
 ]
 ```
 
-### Enable Access to the Jar files
+### Enable Elevated CUSS API
 
-The Angular application must have access to the Jar files from the root of the web server. Which means that the following files should be accessible as follow:
+The Angular application must have access to the Elevated CUSS API, which is a webapi service that function as a bridge between CORBA and the web app through a Restful API. In order to access the elevated-cuss-api.jar please contact Elevation Software Sales Department.
 
-```js
-/elevated-cuss.jar
-/jackson-annotations-2.6.0.jar
-/jackson-databind-2.6.3.jar
-/jackson-core-2.6.3.jar
+#### Executing Elevated CUSS API Service
+```sh
+javaw -jar elevated-cuss-api.jar
 ```
 
 Contact Elevation Software Tech support to get a production or trial copy of the necessary Jars.
@@ -255,7 +359,7 @@ The Angular library has the following dependencies:
 | Items          | Description                                                              |
 | --------------- | -------------------------------------------------------------------------- |
 | **ECUSS**      | A Javascript binding for Elevated CUSS Applet                            |
-| **Java Applet**| The jar required to create a CORBA and JS binding                        |
+| **Java Jar**| The jar required to create a CORBA and JS bridge through a Restful API                        |
 | **KioskToken** | An Elevated unique identifier that enable cloud communication.           |
 | **NPM Token**  | A required token that allows the installation of the private npm package |
 
