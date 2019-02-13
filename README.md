@@ -157,6 +157,20 @@ version(): Promise<{ version: String}>
 devicesList(): Promise<Device[]>;
 
 /**
+  * Query the state of a particular device by ID.
+  * POST http://{URL}/query?deviceId={deviceId}
+  * @param deviceId 
+  */
+  query(deviceId: number): Promise<returncode>;
+
+   /**
+   * Acquire  a particular device by ID.
+   * POST http://{URL}/acquire?deviceId={deviceId}
+   * @param deviceId 
+   */
+  acquire(deviceId: number): Promise<returncode>;
+
+/**
 * Enable a particular device by ID.
 * POST http://{URL}/enable?deviceId={deviceId}
 * @param deviceId 
