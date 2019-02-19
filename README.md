@@ -2,17 +2,28 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-![](https://github.com/elevationsoftware/ecuss/blob/master/images/angularcuss.png)
+<img src="images/angularcuss.svg" style="width:150px;" />
+<img src="images/reactcuss.png" style="width:150px;" />
+<img src="images/vuecuss.png" style="width:150px;" />
 
 
 ECUSS is a library which brings modern development possibilities to the Common Use Self Service industry.  The CUSS specification has been around since the early 2000s and is very difficult to program against without a facade in place to facilitate communication.
 
 The CUSS 1.X line is built entirely on CORBA (Common Object Request Broker Architecture) and modern technologies simply can't make use of such legacy tech without a complicated proxy.  CORBA bridges the communication gap between the client application and the device layer through a Java applet.  Applet technology itself (NPAPI) has also been obsolete for many years and it's graceful replacement is the intention of this library.
 
-With ECUSS, organizations can use modern JavaScript frameworks and tools to build applications including TypeScript, Angular, React, Vue, EcmaScript+.  The framework is forward compatible with alpha versions of the CUSS 2.X line and won't require any upgrades as new versions emerges.
+With ECUSS, organizations can use modern JavaScript frameworks and tools to build applications including TypeScript, Angular, React, Vue, EcmaScript+.  The framework is forward compatible with alpha versions of the CUSS 2.X line and won't require any upgrades as new versions emerge.
 
+#### Cloud Enable Your Kiosks
 
-#### Application written with ECUSS
+Another instant benefit of using our ECUSS library is you will get instant remote access to your kiosks and all their devices.  Workflow applications like agent tablet assist can now be easily added to your repertoire.  Turn your less busy kiosks into fulfillment stations where agents can help during irregular operations or during your busiest times.
+
+#### Finally, A Modern Browser
+
+And lastly, CUSS 1.5+ allows you to use whatever browser works best for your organization.  You can't take advantage of that fact without ECUSS as the Java Applet would still be required.  Using ECUSS officially enables you to use the latest browsers on the market.
+
+#### Use Our Demo Application Source Code To Accellerate Development
+
+Our demo appliction uses the Angular version of ECUSS to excercise all possible devices.  The source comes with ECUSS.
 
 ![](https://github.com/elevationsoftware/ecuss/blob/master/images/new%20app.png)
 
