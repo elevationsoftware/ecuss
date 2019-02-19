@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-<img src="images/angularcuss.svg" style="width:150px;" />
-<img src="images/reactcuss.png" style="width:150px;" />
-<img src="images/vuecuss.png" style="width:150px;" />
+<img src="images/angularcuss.svg" width="150" />
+<img src="images/reactcuss.png" width="150" />
+<img src="images/vuecuss.png" width="150" />
 
 
 ECUSS is a library which brings modern development possibilities to the Common Use Self Service industry.  The CUSS specification has been around since the early 2000s and is very difficult to program against without a facade in place to facilitate communication.
@@ -21,7 +21,7 @@ Another instant benefit of using our ECUSS library is you will get instant remot
 
 And lastly, CUSS 1.5+ allows you to use whatever browser works best for your organization.  You can't take advantage of that fact without ECUSS as the Java Applet would still be required.  Using ECUSS officially enables you to use the latest browsers on the market.
 
-#### Use Our Demo Application Source Code To Accellerate Development
+#### Use Our Demo Application Source Code To Accelerate Development
 
 Our demo appliction uses the Angular version of ECUSS to excercise all possible devices.  The source comes with ECUSS.
 
