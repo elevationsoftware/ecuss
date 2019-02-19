@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-<img src="images/angularcuss.svg" width="150" />
-<img src="images/reactcuss.png" width="150" />
-<img src="images/vuecuss.png" width="150" />
+<img src="images/angularcuss.svg" align="left" width="33%" />
+<img src="images/reactcuss.png" align="left" width="33%" />
+<img src="images/vuecuss.png" align="left" width="33%" />
 
 
 ECUSS is a library which brings modern development possibilities to the Common Use Self Service industry.  The CUSS specification has been around since the early 2000s and is very difficult to program against without a facade in place to facilitate communication.
