@@ -6,7 +6,7 @@
 <img src="images/reactcuss.png" align="left" width="30%" />
 <img src="images/vuecuss.png" align="left" width="30%" />
 
-<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br>
 
 ECUSS is a library which brings modern development possibilities to the Common Use Self Service industry.  The CUSS specification has been around since the early 2000s and is very difficult to program against without a facade in place to facilitate communication.
 
